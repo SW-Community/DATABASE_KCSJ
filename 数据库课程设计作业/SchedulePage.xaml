@@ -1,0 +1,38 @@
+﻿<Page x:Name="SchedulePGE" x:Class="数据库课程设计作业.SchedulePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="SchedulePage">
+
+    <Grid Background="#ffffff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5.5*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Label Content="选择一趟列车，我们为您展示详细的列车时刻表，包括经停站点，到达时间，离开时间！"/>
+            <Label Content="友情提示：请输入车次编号哟。威海地铁竭诚为您服务！" Foreground="#0070d5"/>
+            <WrapPanel>
+                <Label Content="车次编号："/>
+                <TextBox x:Name="txbTname" x:FieldModifier="public" Width="200" Loaded="txbTname_Loaded"/>
+                <Button x:Name="btnQuerySchedule" Content="查询列车时刻" Click="btnQuerySchedule_Click"/>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock x:Name="txbHint" Text=""/>
+            <DataGrid x:Name="dgSchedule" CanUserSortColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="车次" Visibility="Hidden" Binding="{Binding tname}"/>
+                    <DataGridTextColumn Header="站点" Binding="{Binding snname}"/>
+                    <DataGridTextColumn Header="进站时间（不显示表示始发站）" Binding="{Binding yzarrive}"/>
+                    <DataGridTextColumn Header="出站时间（不显示表示终到站）" Binding="{Binding yzleave}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        
+    </Grid>
+</Page>

@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace 数据库课程设计作业
+{
+    /// <summary>
+    /// SuWindow.xaml 的交互逻辑
+    /// </summary>
+    public partial class SuWindow : Window
+    {
+        public SuWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            if(MessageBox.Show("返回用户态？","系统提示",MessageBoxButton.YesNo,MessageBoxImage.Information) == MessageBoxResult.Yes)
+            {
+                foreach(Window w in App.Current.Windows)
+                {
+                    if(w.Name.Equals("SuWD"))
+                    {
+                        w.Close();
+                    }
+                }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            String path =(String)(e.Source as Button).Tag;
+            var uri = new Uri(path,UriKind.RelativeOrAbsolute);
+            frmMain.Source = uri;
+        }
+    }
+}

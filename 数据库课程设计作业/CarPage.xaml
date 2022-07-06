@@ -1,0 +1,89 @@
+﻿<Page x:Class="数据库课程设计作业.CarPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CarPage">
+
+    <Grid Background="#ffffff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" LastChildFill="False">
+            <Label DockPanel.Dock="Left" Content="注：若无当前编组，则表明此车当前未运用"/>
+            <Button DockPanel.Dock="Right" x:Name="btnQueryCar" Content="查询" Width="150" Click="btnQueryCar_Click"/>
+        </DockPanel>
+        <DataGrid x:Name="dgCars" Grid.Row="1" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="座位类型" Binding="{Binding ctypea}"/>
+                <DataGridTextColumn Header="车型" Binding="{Binding ctypeb}"/>
+                <DataGridTextColumn Header="车辆车号" Binding="{Binding cid}"/>
+                <DataGridTextColumn Header="定员" Binding="{Binding ccapacity}"/>
+                <DataGridTextColumn Header="局" Binding="{Binding cjv}"/>
+                <DataGridTextColumn Header="段" Binding="{Binding cduan}"/>
+                <DataGridTextColumn Header="当前编组于" Binding="{Binding tname}"/>
+                <DataGridTextColumn Header="本组位次" Binding="{Binding cnum}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DockPanel Grid.Row="2" LastChildFill="False">
+            <WrapPanel DockPanel.Dock="Top">
+                <ComboBox Name="cbCmanu">
+                    <ComboBoxItem Content="青岛四方" IsSelected="True"/>
+                    <ComboBoxItem Content="青岛四方（BSP)"/>
+                    <ComboBoxItem Content="浦镇"/>
+                    <ComboBoxItem Content="唐山"/>
+                    <ComboBoxItem Content="长客"/>
+                </ComboBox>
+                <Label Content="造 "/>
+                <Label Content="车型："/>
+                <ComboBox Name="cbCartype" SelectionChanged="cbCartype_SelectionChanged">
+                    <ComboBoxItem Content="YZ25B" Tag="128" IsSelected="True"/>
+                    <ComboBoxItem Content="RZ25B" Tag="80"/>
+                    <ComboBoxItem Content="YW25B" Tag="66"/>
+                    <ComboBoxItem Content="RW25B" Tag="36"/>
+                    <ComboBoxItem Content="YZ25G" Tag="118"/>
+                    <ComboBoxItem Content="YW25G" Tag="80"/>
+                    <ComboBoxItem Content="RZ25G" Tag="66"/>
+                    <ComboBoxItem Content="RW25G" Tag="36"/>
+                    <ComboBoxItem Content="YZ25K" Tag="118"/>
+                    <ComboBoxItem Content="YW25K" Tag="72"/>
+                    <ComboBoxItem Content="RZ25K" Tag="66"/>
+                    <ComboBoxItem Content="RW25K" Tag="36"/>
+                    <ComboBoxItem Content="YZ25T" Tag="118"/>
+                    <ComboBoxItem Content="YW25T" Tag="78"/>
+                    <ComboBoxItem Content="RZ25T" Tag="66"/>
+                    <ComboBoxItem Content="RW25T" Tag="36"/>
+                </ComboBox>
+                <Label Content="定员"/>
+                <TextBlock x:Name="txbCcapacity" Text="128" VerticalAlignment="Center"/>
+                <Label Content="人    "/>
+                <TextBox x:Name="txbCjv" Width="30"/>
+                <Label Content="局"/>
+                <TextBox x:Name="txbCduan" Width="30"/>
+                <Label Content="段"/>
+                <Label Content="编组于"/>
+                <TextBox x:Name="txbCTname" Width="100"/>
+                <Label Content="位次"/>
+                <TextBox x:Name="txbCnum" Width="100"/>
+                <Button x:Name="btnAddCar" Content="添加车辆" Click="btnAddCar_Click"/>
+                <Button x:Name="btnRemoveCar" Content="删除车辆" Click="btnRemoveCar_Click"/>
+            </WrapPanel>
+        </DockPanel>
+        <DockPanel Grid.Row="3" LastChildFill="False">
+            <WrapPanel DockPanel.Dock="Top">
+                <Label Content="修改选中编组信息："/>
+                <Label Content="编组于"/>
+                <TextBox x:Name="txbCTnameC" Width="100"/>
+                <Label Content="位次"/>
+                <TextBox x:Name="txbCnumC" Width="100"/>
+                <Button x:Name="btnModfiyBz" Content="修改" Click="btnModfiyBz_Click"/>
+            </WrapPanel>
+        </DockPanel>
+    </Grid>
+</Page>

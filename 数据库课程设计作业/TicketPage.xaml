@@ -1,0 +1,130 @@
+﻿<Page x:Name="TicketPGE" x:Class="数据库课程设计作业.TicketPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="TicketPage" Loaded="Page_Loaded">
+
+    <Grid Background="#ffffff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock TextWrapping="Wrap" Text="好消息，好消息！威海地方铁路车票又要降价了！所有车次，两块钱任意乘坐！不限站点，不限席位，统统两块！两块你买不了吃亏，两块你买不了上当！都两块，坐啥车都两块，全路票价两块，随便挑随便选都两块！购不购票没关系，点进来瞧一瞧，点进来看一看！名额有限，先到先得！心动不如行动，车迷朋友们，快带上心爱的她，来一场说走就走的浪漫运转吧（啥？你没有对象？sorry冒犯了。。。）"/>
+            <!--其实是我还没搞完，暂时这么着-->
+            
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TabControl>
+                <TabItem Header="查询剩余座位">
+                    <StackPanel>
+                        <WrapPanel>
+                            <Label Content="输入车次"/>
+                            <TextBox x:Name="txbName" Width="100"/>
+                            <Label Content="选择你要查哪一天的车票"/>
+                            <DatePicker x:Name="dpDate"/>
+                            <Label Content="出发站"/>
+                            <TextBox x:Name="txbTakeStart" Width="100"/>
+                            <Label Content="到达站"/>
+                            <TextBox x:Name="txbTakeEnd" Width="100"/>
+                            <Button x:Name="btnQueryForSeats" Content="查询可用坐席" Click="btnQueryForSeats_Click"/>
+                        </WrapPanel>
+                        <DataGrid x:Name="dgSeats" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="车次" Binding="{Binding tname}"/>
+                                <DataGridTextColumn Header="车厢号" Binding="{Binding cnum}"/>
+                                <DataGridTextColumn Header="座位类别" Binding="{Binding cytpea}"/>
+                                <DataGridTextColumn Header="车厢类别" Binding="{Binding ctypeb}"/>
+                                <DataGridTextColumn Header="座号" Binding="{Binding cno}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="购票">
+                    <StackPanel>
+                        <WrapPanel>
+                            <TextBlock Text="当前用户id："/>
+                            <TextBox x:Name="txbUid" IsReadOnly="True" Width="100"/>
+                            <TextBlock Text="当前日期："/>
+                            <TextBox x:Name="txbDate" IsReadOnly="True" Width="100"/>
+                            <TextBlock Text="支付方式："/>
+                            <ComboBox Name="cmbZffs">
+                                <ComboBoxItem Content="微信" IsSelected="True"/>
+                                <ComboBoxItem Content="支付宝"/>
+                                <ComboBoxItem Content="银行卡"/>
+                                <ComboBoxItem Content="现金"/>
+                            </ComboBox>
+                            <TextBlock Text="当前总金额："/>
+                            <TextBox x:Name="txbSumPrice" Width="100" IsReadOnly="True"/>
+                            <Button x:Name="btnSubmit" Content="选好了，提交订单！" Click="btnSubmit_Click"/>
+                        </WrapPanel>
+                        <ListBox x:Name="lbTickets" Height="300">
+                            
+                        </ListBox>
+
+                            <Border Background="AliceBlue">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Label Content="乘车人姓名："/>
+                                    <TextBox x:Name="txbTaker" Width="100"/>
+                                    <Label Content="车次："/>
+                                    <TextBox x:Name="txbTname" Width="100"/>
+                                    <Label Content="起点站："/>
+                                    <TextBox x:Name="txbStart" Width="100"/>
+                                    <Label Content="终点站："/>
+                                    <TextBox x:Name="txbEnd" Width="100"/>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Label Content="车厢号："/>
+                                    <TextBox x:Name="txbCnum" Width="100"/>
+                                    <Label Content="座号："/>
+                                    <TextBox x:Name="txbSeatnum" Width="100"/>
+                                    <Label Content="乘车日期"/>
+                                    <DatePicker Name="dpTakedate"/>
+                                </WrapPanel>
+                                <StackPanel >
+                                    <Button x:Name="btnAddTicket" Content="添加车票" Click="btnAddTicket_Click"/>
+                                    <Button x:Name="btnRemoveTicket" Content="删除选中车票" Click="btnRemoveTicket_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="查看已购车票/退票" Loaded="TabItem_Loaded">
+                    <Border>
+                        <StackPanel>
+                            <WrapPanel>
+                                <TextBlock TextWrapping="Wrap" Width="600" Text="这里列出了您购买过的所有车票（以经退票的不包括在内）。选中车票，点击打印就可以取得纸质车票（请妥善保存生成的文件，以免造成不便或泄露您的隐私）温馨提示：根据铁路总公司相关规定，2020年6月20日起，全路全面实行电子客票，您无需打印车票，凭注册用户ID或APP扫码即可进站乘车，打印功能仅提供给有需要的用户，如希望将车票保留备用或留作收藏纪念"/>
+                                <Button x:Name="btnRefresh" Width="100" Content="刷新页面" Click="btnRefresh_Click"/>
+                            </WrapPanel>
+                            <DataGrid x:Name="dgBoughtTickets" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="用户ID" Binding="{Binding uid}"/>
+                                    <DataGridTextColumn Header="用户名" Binding="{Binding uname}"/>
+                                    <DataGridTextColumn Header="订单ID" Binding="{Binding oid}"/>
+                                    <DataGridTextColumn Header="支付方式" Binding="{Binding zffs}"/>
+                                    <DataGridTextColumn Header="车票号" Binding="{Binding odid}"/>
+                                    <DataGridTextColumn Header="乘车日期" Binding="{Binding takedate}" HeaderStringFormat="yyyy-MM-dd"/>
+                                    <DataGridTextColumn Header="乘车人" Binding="{Binding takername}"/>
+                                    <DataGridTextColumn Header="车次" Binding="{Binding tname}"/>
+                                    <DataGridTextColumn Header="座位类型" Binding="{Binding ctypea}"/>
+                                    <DataGridTextColumn Header="车厢类型" Binding="{Binding ctypeb}"/>
+                                    <DataGridTextColumn Header="车厢号" Binding="{Binding cnum}"/>
+                                    <DataGridTextColumn Header="座号" Binding="{Binding cno}"/>
+                                    <DataGridTextColumn Header="出发站" Binding="{Binding takestart}"/>
+                                    <DataGridTextColumn Header="到达站" Binding="{Binding takeend}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button x:Name="btnPrint" Content="打印选定车票" Click="btnPrint_Click"/>
+                            <Button x:Name="btnTuipiao" Content="退掉选定车票" Click="btnTuipiao_Click"/>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </Grid>
+</Page>

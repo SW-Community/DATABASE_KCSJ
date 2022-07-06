@@ -1,0 +1,106 @@
+﻿<Window x:Name="LoginWD" x:Class="数据库课程设计作业.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:数据库课程设计作业"
+        mc:Ignorable="d"
+        Title="登录" Height="600" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" Topmost="False" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4.5*"/>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="1.3*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,10,10,10">
+            <Image Source="/topbar.jpg" Stretch="Fill"  />
+        </WrapPanel>
+        <StackPanel Grid.Row="1" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="3"/>
+                    <Setter Property="Background" Value="#f3f3f3"></Setter>
+                    <Setter Property="FontSize" Value="28"/>
+                    <Setter Property="Margin" Value="5,5,5,5"/>
+                </Style>
+                <Style TargetType="Label">
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Margin" Value="5,5,5,5"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Margin" Value="5,5,5,5"/>
+                </Style>
+                <Style TargetType="PasswordBox">
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Margin" Value="5,5,5,5"/>
+                </Style>
+            </StackPanel.Resources>
+            <TabControl Margin="5,5,5,5" FontSize="25">
+                <TabItem x:Name="tabLogin" Header="登录">
+                    <StackPanel>
+                        <WrapPanel HorizontalAlignment="Center">
+                            <Label Content="邮箱"></Label>
+                            <TextBox x:Name="txbEmail" Width="400"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel HorizontalAlignment="Center">
+                            <Label Content="密码"></Label>
+                            <PasswordBox Name="pwbPassword" Width="400" PasswordChar="·"></PasswordBox>
+                        </WrapPanel>
+                        <Button Name="btnLogin" Content="登录" Click="btnLogin_Click"/>
+                        <TextBlock x:Name="txbMsg" FontSize="20" Foreground="#ff0000"></TextBlock>
+                        <TextBlock x:Name="txbInfo" FontSize="40" TextAlignment="Center" Foreground="#90c3f8"></TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem x:Name="tabRegister" Header="注册" HorizontalAlignment="Center" Width="62" Height="36" VerticalAlignment="Bottom">
+                    <StackPanel>
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!--昵称-->
+                            <Label Content="昵称："/>
+                            <TextBox x:Name="txbName" Width="250"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!--邮箱-->
+                            <Label Content="邮箱："/>
+                            <TextBox x:Name="txbEmail2" Width="250"/>
+                        </WrapPanel>
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!--密码-->
+                            <Label Content="密码："/>
+                            <TextBox x:Name="txbPwd" Width="250"/>
+                        </WrapPanel>
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!--确认密码-->
+                            <Label Content="确认密码："/>
+                            <TextBox x:Name="txbConfirm" Width="250"/>
+                        </WrapPanel>
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!--照片（这地方，，，难道要我调用摄像头？不会，还是从本地浏览吧）-->
+                            <WrapPanel>
+                                <Border Margin="5" Padding="5" BorderBrush="Blue" BorderThickness="1">
+                                    <Image x:Name="imgPhoto" Height="79" Width="58"/>
+                                </Border>
+                                <StackPanel Margin="5,5,5,5">
+                                    <Button x:Name="btnAddPhoto" FontSize="16" Content="添加照片" Click="btnAddPhoto_Click"/>
+                                    <Button x:Name="btnRemovePhoto" FontSize="16" Content="删除照片" Click="btnRemovePhoto_Click"/>
+                                </StackPanel>
+                            </WrapPanel>
+                        </WrapPanel>
+                        <Border BorderBrush="#000000" Margin="5,5,5,5" Padding="5,5,5,5" BorderThickness="2">
+                            <TextBlock FontSize="16" HorizontalAlignment="Left" TextWrapping="Wrap" Text="我们最大程度上尊重用户隐私，因此您在注册时，我们不要求您提供任何身份证号，手机号码等实名信息，为了方便向您推送我们的最新动态，您需要提供您的电子邮件地址，建议您使用outlook，Gmail等邮箱，因为注册它们亦不需要实名认证。当然使用其他邮箱也是可以的。"/>
+
+                        </Border>
+                        <Button Name="btnRegister" Content="同意我们的服务条款，立即注册！" Click="btnRegister_Click"/>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            <DockPanel LastChildFill="False">
+                <Button Content="#超级用户" BorderBrush="#ffffff" Background="#ffffff" Foreground="Blue" FontSize="15" Click="Button_Click"/>
+            </DockPanel>
+        </StackPanel>
+        
+        <WrapPanel Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#90c3f8">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="版权所有 2014-2022 Steve Workshop 本软件遵循GPL开源许可协议版本3              "/>
+        </WrapPanel>
+    </Grid>
+</Window>

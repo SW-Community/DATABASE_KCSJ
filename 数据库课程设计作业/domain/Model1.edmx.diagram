@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="91e9dfd3734a4d6aa486adf38286e40e" Name="Diagram1">
+        <EntityTypeShape EntityType="locomotive_systemModel.Act" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Car" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Locomotive" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Orderdetail" Width="1.5" PointX="7.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Orders" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Seat" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Station" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Train" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Users" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Yunzhuan" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Chepiao" Width="1.5" PointX="8.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Liechegaikuang" Width="1.5" PointX="9.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Liecheshikebiao" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="locomotive_systemModel.FK__act__lname__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK__act__tname__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK__car__tname__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK__seat__cid__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK__orderdetai__srid__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK__orderdetail__oid__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK_orderdetail_takeend_1" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK_orderdetail_takestart_1" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK_orders_orders_1" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK__yunzhuan__snname__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="locomotive_systemModel.FK__yunzhuan__tname__68487DD7" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="locomotive_systemModel.Availableseats" Width="1.5" PointX="10.375" PointY="9.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,96 @@
+﻿<Page x:Class="数据库课程设计作业.QueryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="QueryPage">
+    <Page.Resources>
+        <DataTemplate x:Key="FacheTimeTemplate">
+            <TextBlock Text="{Binding yzleave, StringFormat=hh:mm:ss}"/>
+            <!--绑定的属性名称填进去-->
+        </DataTemplate>
+        <DataTemplate x:Key="DaodaTimeTemplate">
+            <TextBlock Text="{Binding yzarrive, StringFormat=hh:mm:ss}"/>
+            <!--绑定的属性名称填进去-->
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="#ffffff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5.5*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock TextWrapping="Wrap" Text="我们支持两种类型的查询，一种是提供出发地和到达地，适合想乘车的旅客；另一种是查询经停某站点的所有列车，以及某车次的详细信息，适合想去特定站点拍车的旅客。"/>
+            <TextBlock Text="请在下面选项卡选择你的操作："/>
+            <TextBlock TextWrapping="Wrap" Text="公告：为更好的提升服务质量，加深客户参与度并及时收到反馈，即日起威海地铁管内全部站点和沿线指定区域免费向公众开放参观，欢迎广大车迷前来拍照打卡！" Foreground="Red"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TabControl>
+                <TabItem Header="我要乘车" IsSelected="True">
+                    <StackPanel>
+                        <TextBlock Text="提供出发地，到达地，我们为你选择合适的列车。您还可以指定一些条件，比如车次等级"/>
+                        <TextBlock x:Name="QueryPGE" Text="温馨提示：双击某一车次，可以跳转到车次详情页面！"/>
+
+                        <WrapPanel Margin="0,5,0,5">
+                            <TextBlock Text="出发地："/>
+                            <TextBox x:Name="txbStartPlace" Width="100"/>
+                            <Button x:Name="btnSwap" Content="《--切换--》" Margin="15,0,15,0" Click="btnSwap_Click"/>
+                            <TextBlock Text="到达地："/>
+                            <TextBox x:Name="txbEndPlace" Width="100"/>
+                        </WrapPanel>
+                        <WrapPanel Margin="0,5,0,5">
+                            <TextBlock Text="速度级别过滤：| "/>
+                            <CheckBox x:Name="cbAll" Margin="5,0,5,0" Content="全选/全不选   |" IsChecked="True" Click="cbAll_Click"/>
+                            <CheckBox x:Name="cbZhida" Margin="5,0,5,0" Content="直达" IsChecked="True" Click="cbOthers_Click"/>
+                            <CheckBox x:Name="cbTekuai" Margin="5,0,5,0" Content="特快" IsChecked="True" Click="cbOthers_Click"/>
+                            <CheckBox x:Name="cbKuaisu" Margin="5,0,5,0" Content="快速" IsChecked="True" Click="cbOthers_Click"/>
+                            <CheckBox x:Name="cbPusu" Margin="5,0,5,0" Content="慢车" IsChecked="True" Click="cbOthers_Click"/>
+                            <CheckBox x:Name="cbLinke" Margin="5,0,5,0" Content="临客" IsChecked="True" Click="cbOthers_Click"/>
+                            <CheckBox x:Name="cbLvyou" Margin="5,0,5,0" Content="旅游专列" IsChecked="True" Click="cbOthers_Click"/>
+                            <CheckBox x:Name="cbXingbao" Margin="5,0,5,0" Content="行包快运及棚代客" Click="cbXingbao_Click"/>
+                        </WrapPanel>
+                        <Button x:Name="btnQueryForTake" Margin="5,5,5,5" Content="立即查询！" Click="btnQueryForTake_Click"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="我要参观、拍车">
+                    <StackPanel>
+                        <Label Content="支持按车次名称，经停站点，本务机车查询（对你没听错），提供查询条件后，请坐和放宽，准备开启一段甜蜜的铁路运转之旅吧！"/>
+
+                        <Label Content="友情提示：查询车次请输入车次编号，查询经停站点请输入站点名称，查询本务机车请输入机车车号或型号。威海地铁竭诚为您服务！" Foreground="#0070d5"/>
+                        <WrapPanel>
+                            <Label Content="查询条件："/>
+                            <ComboBox Name="cbCondition">
+                                <ComboBoxItem Content="按车次查询" IsSelected="True"/>
+                                <ComboBoxItem Content="按经停站点查询"/>
+                                <ComboBoxItem Content="按本务机车查询"/>
+                            </ComboBox>
+                            <Label Content="输入查询字段："/>
+                            <TextBox x:Name="txbQuField" Width="150"/>
+                            <Button x:Name="btnQuery" Content="立即查询" Width="120" Click="btnQuery_Click"/>
+                        </WrapPanel>
+                        
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            <DataGrid x:Name="dgCheci" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" Height="300" Grid.Row="1" VerticalAlignment="Top" MouseDoubleClick="dgCheci_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="车次" Binding="{Binding tname}"/>
+                    <DataGridTextColumn Header="始发站" Binding="{Binding tstart}"/>
+                    <DataGridTextColumn Header="终到站" Binding="{Binding tend}"/>
+                    <DataGridTextColumn Header="发车时间" Binding="{Binding yzleave}"/>
+                    <DataGridTextColumn Header="到达时间" Binding="{Binding yzarrive}"/>
+                    <DataGridTextColumn Header="本务机车" Binding="{Binding lname}"/>
+                    <DataGridTextColumn Header="配属路局（公司）" Binding="{Binding ljv}"/>
+                    <DataGridTextColumn Header="配属机务段" Binding="{Binding lduan}"/>
+                    <DataGridTextColumn Header="大车" Binding="{Binding ldriver}"/>
+                    <DataGridTextColumn Header="列车长" Binding="{Binding tcaptain}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        
+
+    </Grid>
+</Page>

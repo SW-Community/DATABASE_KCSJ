@@ -1,0 +1,85 @@
+﻿<Page x:Class="数据库课程设计作业.TrainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TrainPage">
+    <Page.Resources>
+        <DataTemplate x:Key="FacheTimeTemplate">
+            <TextBlock Text="{Binding yzleave, StringFormat=hh:mm:ss}"/>
+            <!--绑定的属性名称填进去-->
+        </DataTemplate>
+        <DataTemplate x:Key="DaodaTimeTemplate">
+            <TextBlock Text="{Binding yzarrive, StringFormat=hh:mm:ss}"/>
+            <!--绑定的属性名称填进去-->
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="#ffffff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" LastChildFill="False">
+            <Button x:Name="btnQyeryAct" Content="查询排班表" DockPanel.Dock="Right" Width="100" Click="btnQyeryAct_Click"/>
+            <Button x:Name="btnQueryTrain" Content="查询车次" DockPanel.Dock="Right" Width="100" Click="btnQueryTrain_Click"/>
+        </DockPanel>
+        <StackPanel Grid.Row="1">
+            <DataGrid x:Name="dgTrain" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" Height="300" Grid.Row="1" VerticalAlignment="Top">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="车次" Binding="{Binding tname}"/>
+                    <DataGridTextColumn Header="始发站" Binding="{Binding tstart}"/>
+                    <DataGridTextColumn Header="终到站" Binding="{Binding tend}"/>
+                    <DataGridTextColumn Header="发车时间" Binding="{Binding yzleave}"/>
+                    <DataGridTextColumn Header="到达时间" Binding="{Binding yzarrive}"/>
+                    <DataGridTextColumn Header="本务机车" Binding="{Binding lname}"/>
+                    <DataGridTextColumn Header="配属路局（公司）" Binding="{Binding ljv}"/>
+                    <DataGridTextColumn Header="配属机务段" Binding="{Binding lduan}"/>
+                    <DataGridTextColumn Header="大车" Binding="{Binding ldriver}"/>
+                    <DataGridTextColumn Header="列车长" Binding="{Binding tcaptain}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <DockPanel Grid.Row="2">
+            <WrapPanel DockPanel.Dock="Top">
+                <TextBlock Text="车次编号："/>
+                <TextBox x:Name="txbCheciHao" Width="100"/>
+                <TextBlock Text="谁将值乘这趟车？："/>
+                <TextBox x:Name="txbLieCheZhang" Width="100"/>
+                <TextBlock Text="起点站是："/>
+                <TextBox x:Name="txbQdz" Width="100"/>
+                <TextBlock Text="终到站是："/>
+                <TextBox x:Name="txbZdz" Width="100"/>
+                <Button x:Name="btnAddTrain" Content="加开车次" Click="btnAddTrain_Click"/>
+            </WrapPanel>
+        </DockPanel>
+        <DataGrid Grid.Row="3" x:Name="dgAct" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="车号" Binding="{Binding lname}"/>
+                <DataGridTextColumn Header="车次" Binding="{Binding tname}"/>
+                <DataGridTextColumn Header="司机" Binding="{Binding ldriver}"/>
+                <DataGridTextColumn Header="值乘日期" Binding="{Binding adate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DockPanel Grid.Row="4">
+            <WrapPanel DockPanel.Dock="Top">
+                <TextBlock Text="设置记录各车的驾驶员等信息     "></TextBlock>
+                <TextBlock Text="车号："/>
+                <TextBox x:Name="txbChehao" Width="100"/>
+                <TextBlock Text="车次"/>
+                <TextBox x:Name="txbTname" Width="100"/>
+                <TextBlock Text="司机（多个人请用分号隔开）："/>
+                <TextBox x:Name="txbSiji" Width="100"/>
+                <TextBlock Text="日期"/>
+                <DatePicker Name="dpRiQi"/>
+                <Button x:Name="btnAddAct" Content="录入" Click="btnAddAct_Click"/>
+                <Button x:Name="btnDeleteAct" Content="删除选中" Click="btnDeleteAct_Click"/>
+            </WrapPanel>
+        </DockPanel>
+    </Grid>
+</Page>

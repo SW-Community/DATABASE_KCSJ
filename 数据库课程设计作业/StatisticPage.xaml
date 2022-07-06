@@ -1,0 +1,171 @@
+﻿<Page x:Class="数据库课程设计作业.StatisticPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StatisticPage">
+
+    <Grid Background="#ffffff">
+        <TabControl>
+            <TabItem Header="票务/订单记录">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" LastChildFill="False">
+                        <TextBlock Text="选择查询区间：从"/>
+                        <DatePicker Name="dpStart" SelectedDate="2020-01-01 00:00:00"/>
+                        <TextBlock Text="到"/>
+                        <DatePicker Name="dpEnd" SelectedDate="2020-01-01 00:00:00"/>
+                        <Button x:Name="btnQueryAll" Content="查询所有" DockPanel.Dock="Right" Click="btnQueryAll_Click"/>
+                        <Button x:Name="btnQuerySegment" Content="查询指定区间票务记录" DockPanel.Dock="Right" Click="btnQuerySegment_Click"/>
+                    </DockPanel>
+                    <DataGrid Grid.Row="1" x:Name="dgBoughtTickets" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="用户ID" Binding="{Binding uid}"/>
+                            <DataGridTextColumn Header="用户名" Binding="{Binding uname}"/>
+                            <DataGridTextColumn Header="订单ID" Binding="{Binding oid}"/>
+                            <DataGridTextColumn Header="支付方式" Binding="{Binding zffs}"/>
+                            <DataGridTextColumn Header="车票号" Binding="{Binding odid}"/>
+                            <DataGridTextColumn Header="乘车日期" Binding="{Binding takedate}" HeaderStringFormat="yyyy-MM-dd"/>
+                            <DataGridTextColumn Header="乘车人" Binding="{Binding takername}"/>
+                            <DataGridTextColumn Header="车次" Binding="{Binding tname}"/>
+                            <DataGridTextColumn Header="座位类型" Binding="{Binding ctypea}"/>
+                            <DataGridTextColumn Header="车厢类型" Binding="{Binding ctypeb}"/>
+                            <DataGridTextColumn Header="车厢号" Binding="{Binding cnum}"/>
+                            <DataGridTextColumn Header="座号" Binding="{Binding cno}"/>
+                            <DataGridTextColumn Header="出发站" Binding="{Binding takestart}"/>
+                            <DataGridTextColumn Header="到达站" Binding="{Binding takeend}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DockPanel Grid.Row="2" LastChildFill="False">
+                        <WrapPanel DockPanel.Dock="Top">
+                            <TextBlock Text="数据为统计规律，仅供参考：从"/>
+                            <TextBlock x:Name="txbSHolder"/>
+                            <TextBlock Text="到"/>
+                            <TextBlock x:Name="txbEHolder"/>
+                            <TextBlock Text="，共"/>
+                            <TextBlock x:Name="txbCnt"/>
+                            <TextBlock Text="人次购票乘车"/>
+                        </WrapPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="用户个性化统计">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Text="输入用户ID"/>
+                        <TextBox x:Name="txbUid" Width="100"/>
+                        <Button x:Name="btnQu" DockPanel.Dock="Right" Content="查询" Width="100" Click="btnQu_Click"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="1" LastChildFill="False">
+                        <WrapPanel DockPanel.Dock="Right">
+                            <Border Margin="5" Padding="5" BorderBrush="Blue" BorderThickness="1">
+                                <Image x:Name="imgInfoPhoto" Height="158" Width="116"/>
+                            </Border>
+                        </WrapPanel>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <Label Content="用户ID"/>
+                            <TextBox x:Name="txbInfoUid" Width="250" IsReadOnly="True"/>
+                        </WrapPanel>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <!--昵称-->
+                            <Label Content="昵称："/>
+                            <TextBox x:Name="txbInfoName" Width="250" IsReadOnly="True"/>
+                        </WrapPanel>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <Label Content="邮箱："/>
+                            <TextBox x:Name="txbInfoEmail" Width="250" IsReadOnly="True"/>
+                        </WrapPanel>
+                        <Line Stroke="#000000" Fill="Black"  StrokeThickness="5" DockPanel.Dock="Top" Opacity="0" Stretch="Fill"/>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <TextBlock Text="该用户的活动数据如下：" FontSize="20"/>
+                        </WrapPanel>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <TextBlock Text="贡献（RMB）："/>
+                            <TextBox x:Name="txbGX" Width="100" IsReadOnly="True"/>
+                        </WrapPanel>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <TextBlock Text="下单（次）："/>
+                            <TextBox x:Name="txbDD" Width="100" IsReadOnly="True"/>
+                        </WrapPanel>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <TextBlock Text="购票（张）："/>
+                            <TextBox x:Name="txbGP" Width="100" IsReadOnly="True"/>
+                        </WrapPanel>
+                        <WrapPanel DockPanel.Dock="Top">
+                            <TextBlock Text="乘车（次）："/>
+                            <TextBox x:Name="txbCC" Width="100" IsReadOnly="True"/>
+                        </WrapPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="站点/车次客流量统计">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        
+                        
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" LastChildFill="False">
+                        <StackPanel DockPanel.Dock="Left">
+                            <TextBlock Text="输入站点"/>
+                            <TextBox x:Name="txbZhandian" Width="100"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Left">
+                            <TextBlock Text="开始日期"/>
+                            <DatePicker Name="dgStart"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Left">
+                            <TextBlock Text="结束日期"/>
+                            <DatePicker Name="dgEnd"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="总客流量："/>
+                            <TextBox Name="txbZkll" Width="100" IsReadOnly="True"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="进站人次："/>
+                            <TextBox Name="txbRkll" Width="100" IsReadOnly="True"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="出站人次："/>
+                            <TextBox Name="txbCkll" Width="100" IsReadOnly="True"/>
+                        </StackPanel>
+                        <Button x:Name="btnQZ" DockPanel.Dock="Right" Content="查询" Width="100" Click="btnQZ_Click"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="1" LastChildFill="False">
+                        <StackPanel DockPanel.Dock="Left">
+                            <TextBlock Text="输入车次"/>
+                            <TextBox x:Name="txbCheci" Width="100"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Left">
+                            <TextBlock Text="开始日期"/>
+                            <DatePicker Name="dpStart1"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Left">
+                            <TextBlock Text="结束日期"/>
+                            <DatePicker Name="dpEnd1"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="总客流量："/>
+                            <TextBox Name="txbCCll" Width="100" IsReadOnly="True"/>
+                        </StackPanel>
+                        <Button x:Name="btnQC" DockPanel.Dock="Right" Width="100" Content="查询" Click="btnQC_Click"/>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

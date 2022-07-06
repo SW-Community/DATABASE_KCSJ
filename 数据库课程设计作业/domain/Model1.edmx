@@ -1,0 +1,999 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="locomotive_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Act">
+          <Key>
+            <PropertyRef Name="adate" />
+            <PropertyRef Name="lname" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="adate" Type="datetime" Nullable="false" />
+          <Property Name="lname" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="tname" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="ldriver" Type="char" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cmanufacturer" Type="char" MaxLength="32" />
+          <Property Name="ctypea" Type="char" MaxLength="8" />
+          <Property Name="ctypeb" Type="char" MaxLength="8" />
+          <Property Name="cjv" Type="char" MaxLength="8" />
+          <Property Name="cduan" Type="char" MaxLength="8" />
+          <Property Name="ccapacity" Type="smallint" />
+          <Property Name="tname" Type="char" MaxLength="16" />
+          <Property Name="cnum" Type="nchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Locomotive">
+          <Key>
+            <PropertyRef Name="lname" />
+          </Key>
+          <Property Name="lname" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="lmanufacturer" Type="char" MaxLength="32" />
+          <Property Name="lbirth" Type="datetime" />
+          <Property Name="ljv" Type="char" MaxLength="8" />
+          <Property Name="lduan" Type="char" MaxLength="8" />
+          <Property Name="lphoto" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Orderdetail">
+          <Key>
+            <PropertyRef Name="odid" />
+          </Key>
+          <Property Name="oid" Type="int" />
+          <Property Name="odid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="seid" Type="int" />
+          <Property Name="takedate" Type="datetime" />
+          <Property Name="takername" Type="char" MaxLength="16" />
+          <Property Name="takestart" Type="nchar" MaxLength="32" />
+          <Property Name="takeend" Type="nchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="odate" Type="datetime" />
+          <Property Name="zffs" Type="char" MaxLength="6" />
+          <Property Name="uid" Type="int" />
+          <Property Name="zje" Type="int" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="seid" />
+          </Key>
+          <Property Name="seid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isused" Type="char" MaxLength="2" />
+          <Property Name="cid" Type="int" />
+          <Property Name="cno" Type="int" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="snname" />
+          </Key>
+          <Property Name="snname" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="snlevel" Type="nchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="tname" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="tcaptain" Type="char" MaxLength="8" />
+          <Property Name="tstart" Type="nchar" MaxLength="32" />
+          <Property Name="tend" Type="nchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uname" Type="nchar" MaxLength="32" />
+          <Property Name="uemail" Type="nchar" MaxLength="32" />
+          <Property Name="upassword" Type="nchar" MaxLength="10" />
+          <Property Name="uphoto" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Yunzhuan">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="snname" />
+          </Key>
+          <Property Name="tname" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="snname" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="yzarrive" Type="time" Precision="7" />
+          <Property Name="yzleave" Type="time" Precision="7" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“locomotive_system.dbo.Availableseats”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="Availableseats">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="seid" />
+          </Key>
+          <Property Name="tname" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="cnum" Type="nchar" MaxLength="5" />
+          <Property Name="cytpea" Type="varchar" MaxLength="4" />
+          <Property Name="ctypeb" Type="char" MaxLength="8" />
+          <Property Name="cno" Type="int" />
+          <Property Name="seid" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“locomotive_system.dbo.Chepiao”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="Chepiao">
+          <Key>
+            <PropertyRef Name="uid" />
+            <PropertyRef Name="oid" />
+            <PropertyRef Name="odid" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="uid" Type="int" Nullable="false" />
+          <Property Name="uname" Type="nchar" MaxLength="32" />
+          <Property Name="oid" Type="int" Nullable="false" />
+          <Property Name="zffs" Type="char" MaxLength="6" />
+          <Property Name="odid" Type="int" Nullable="false" />
+          <Property Name="takedate" Type="datetime" />
+          <Property Name="takername" Type="char" MaxLength="16" />
+          <Property Name="tname" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="ctypea" Type="char" MaxLength="8" />
+          <Property Name="ctypeb" Type="char" MaxLength="8" />
+          <Property Name="cnum" Type="nchar" MaxLength="5" />
+          <Property Name="cno" Type="int" />
+          <Property Name="takestart" Type="nchar" MaxLength="32" />
+          <Property Name="takeend" Type="nchar" MaxLength="32" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“locomotive_system.dbo.Liechegaikuang”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="Liechegaikuang">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="lname" />
+          </Key>
+          <Property Name="tname" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="tstart" Type="nchar" MaxLength="32" />
+          <Property Name="tend" Type="nchar" MaxLength="32" />
+          <Property Name="yzleave" Type="time" Precision="7" />
+          <Property Name="yzarrive" Type="time" Precision="7" />
+          <Property Name="lname" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="ljv" Type="char" MaxLength="8" />
+          <Property Name="lduan" Type="char" MaxLength="8" />
+          <Property Name="ldriver" Type="char" MaxLength="8" />
+          <Property Name="tcaptain" Type="char" MaxLength="8" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“locomotive_system.dbo.Liecheshikebiao”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="Liecheshikebiao">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="snname" />
+          </Key>
+          <Property Name="tname" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="yzarrive" Type="time" Precision="7" />
+          <Property Name="yzleave" Type="time" Precision="7" />
+          <Property Name="snname" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="snlevel" Type="nchar" MaxLength="5" />
+        </EntityType>
+        <Association Name="FK__act__lname__286302EC">
+          <End Role="Locomotive" Type="Self.Locomotive" Multiplicity="1" />
+          <End Role="Act" Type="Self.Act" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locomotive">
+              <PropertyRef Name="lname" />
+            </Principal>
+            <Dependent Role="Act">
+              <PropertyRef Name="lname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__act__tname__29572725">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Act" Type="Self.Act" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="tname" />
+            </Principal>
+            <Dependent Role="Act">
+              <PropertyRef Name="tname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__car__tname__2E1BDC42">
+          <End Role="Train" Type="Self.Train" Multiplicity="0..1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="tname" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="tname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderdetai__srid__3A81B327">
+          <End Role="Seat" Type="Self.Seat" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="seid" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="seid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderdetail__oid__398D8EEE">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seat__cid__31EC6D26">
+          <End Role="Car" Type="Self.Car" Multiplicity="0..1" />
+          <End Role="Seat" Type="Self.Seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="Seat">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__yunzhuan__snname__693CA210">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Yunzhuan" Type="Self.Yunzhuan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="snname" />
+            </Principal>
+            <Dependent Role="Yunzhuan">
+              <PropertyRef Name="snname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__yunzhuan__tname__68487DD7">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Yunzhuan" Type="Self.Yunzhuan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="tname" />
+            </Principal>
+            <Dependent Role="Yunzhuan">
+              <PropertyRef Name="tname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderdetail_takeend_1">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="snname" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="takeend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderdetail_takestart_1">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="snname" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="takestart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_orders_1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="locomotive_systemModelStoreContainer">
+          <EntitySet Name="Act" EntityType="Self.Act" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locomotive" EntityType="Self.Locomotive" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orderdetail" EntityType="Self.Orderdetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seat" EntityType="Self.Seat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Station" EntityType="Self.Station" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Train" EntityType="Self.Train" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yunzhuan" EntityType="Self.Yunzhuan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Availableseats" EntityType="Self.Availableseats" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Availableseats].[tname] AS [tname], 
+    [Availableseats].[cnum] AS [cnum], 
+    [Availableseats].[cytpea] AS [cytpea], 
+    [Availableseats].[ctypeb] AS [ctypeb], 
+    [Availableseats].[cno] AS [cno], 
+    [Availableseats].[seid] AS [seid]
+    FROM [dbo].[Availableseats] AS [Availableseats]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Chepiao" EntityType="Self.Chepiao" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Chepiao].[uid] AS [uid], 
+    [Chepiao].[uname] AS [uname], 
+    [Chepiao].[oid] AS [oid], 
+    [Chepiao].[zffs] AS [zffs], 
+    [Chepiao].[odid] AS [odid], 
+    [Chepiao].[takedate] AS [takedate], 
+    [Chepiao].[takername] AS [takername], 
+    [Chepiao].[tname] AS [tname], 
+    [Chepiao].[ctypea] AS [ctypea], 
+    [Chepiao].[ctypeb] AS [ctypeb], 
+    [Chepiao].[cnum] AS [cnum], 
+    [Chepiao].[cno] AS [cno], 
+    [Chepiao].[takestart] AS [takestart], 
+    [Chepiao].[takeend] AS [takeend]
+    FROM [dbo].[Chepiao] AS [Chepiao]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Liechegaikuang" EntityType="Self.Liechegaikuang" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Liechegaikuang].[tname] AS [tname], 
+    [Liechegaikuang].[tstart] AS [tstart], 
+    [Liechegaikuang].[tend] AS [tend], 
+    [Liechegaikuang].[yzleave] AS [yzleave], 
+    [Liechegaikuang].[yzarrive] AS [yzarrive], 
+    [Liechegaikuang].[lname] AS [lname], 
+    [Liechegaikuang].[ljv] AS [ljv], 
+    [Liechegaikuang].[lduan] AS [lduan], 
+    [Liechegaikuang].[ldriver] AS [ldriver], 
+    [Liechegaikuang].[tcaptain] AS [tcaptain]
+    FROM [dbo].[Liechegaikuang] AS [Liechegaikuang]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Liecheshikebiao" EntityType="Self.Liecheshikebiao" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Liecheshikebiao].[tname] AS [tname], 
+    [Liecheshikebiao].[yzarrive] AS [yzarrive], 
+    [Liecheshikebiao].[yzleave] AS [yzleave], 
+    [Liecheshikebiao].[snname] AS [snname], 
+    [Liecheshikebiao].[snlevel] AS [snlevel]
+    FROM [dbo].[Liecheshikebiao] AS [Liecheshikebiao]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__act__lname__286302EC" Association="Self.FK__act__lname__286302EC">
+            <End Role="Locomotive" EntitySet="Locomotive" />
+            <End Role="Act" EntitySet="Act" />
+          </AssociationSet>
+          <AssociationSet Name="FK__act__tname__29572725" Association="Self.FK__act__tname__29572725">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Act" EntitySet="Act" />
+          </AssociationSet>
+          <AssociationSet Name="FK__car__tname__2E1BDC42" Association="Self.FK__car__tname__2E1BDC42">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderdetai__srid__3A81B327" Association="Self.FK__orderdetai__srid__3A81B327">
+            <End Role="Seat" EntitySet="Seat" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderdetail__oid__398D8EEE" Association="Self.FK__orderdetail__oid__398D8EEE">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seat__cid__31EC6D26" Association="Self.FK__seat__cid__31EC6D26">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Seat" EntitySet="Seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__yunzhuan__snname__693CA210" Association="Self.FK__yunzhuan__snname__693CA210">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Yunzhuan" EntitySet="Yunzhuan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__yunzhuan__tname__68487DD7" Association="Self.FK__yunzhuan__tname__68487DD7">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Yunzhuan" EntitySet="Yunzhuan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderdetail_takeend_1" Association="Self.FK_orderdetail_takeend_1">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderdetail_takestart_1" Association="Self.FK_orderdetail_takestart_1">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_orders_1" Association="Self.FK_orders_orders_1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="locomotive_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Act">
+          <Key>
+            <PropertyRef Name="adate" />
+            <PropertyRef Name="lname" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="adate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="lname" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tname" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ldriver" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Locomotive" Relationship="Self.FK__act__lname__286302EC" FromRole="Act" ToRole="Locomotive" />
+          <NavigationProperty Name="Train" Relationship="Self.FK__act__tname__29572725" FromRole="Act" ToRole="Train" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cmanufacturer" Type="String" MaxLength="32" FixedLength="true" Unicode="false" />
+          <Property Name="ctypea" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="ctypeb" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="cjv" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="cduan" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="ccapacity" Type="Int16" />
+          <Property Name="tname" Type="String" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="cnum" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Train" Relationship="Self.FK__car__tname__2E1BDC42" FromRole="Car" ToRole="Train" />
+          <NavigationProperty Name="Seat" Relationship="Self.FK__seat__cid__31EC6D26" FromRole="Car" ToRole="Seat" />
+        </EntityType>
+        <EntityType Name="Locomotive">
+          <Key>
+            <PropertyRef Name="lname" />
+          </Key>
+          <Property Name="lname" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="lmanufacturer" Type="String" MaxLength="32" FixedLength="true" Unicode="false" />
+          <Property Name="lbirth" Type="DateTime" Precision="3" />
+          <Property Name="ljv" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="lduan" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="lphoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Act" Relationship="Self.FK__act__lname__286302EC" FromRole="Locomotive" ToRole="Act" />
+        </EntityType>
+        <EntityType Name="Orderdetail">
+          <Key>
+            <PropertyRef Name="odid" />
+          </Key>
+          <Property Name="oid" Type="Int32" />
+          <Property Name="odid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seid" Type="Int32" />
+          <Property Name="takedate" Type="DateTime" Precision="3" />
+          <Property Name="takername" Type="String" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="takestart" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="takeend" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Seat" Relationship="Self.FK__orderdetai__srid__3A81B327" FromRole="Orderdetail" ToRole="Seat" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__orderdetail__oid__398D8EEE" FromRole="Orderdetail" ToRole="Orders" />
+          <NavigationProperty Name="Station" Relationship="Self.FK_orderdetail_takeend_1" FromRole="Orderdetail" ToRole="Station" />
+          <NavigationProperty Name="Station1" Relationship="Self.FK_orderdetail_takestart_1" FromRole="Orderdetail" ToRole="Station" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="odate" Type="DateTime" Precision="3" />
+          <Property Name="zffs" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="uid" Type="Int32" />
+          <NavigationProperty Name="Orderdetail" Relationship="Self.FK__orderdetail__oid__398D8EEE" FromRole="Orders" ToRole="Orderdetail" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_orders_orders_1" FromRole="Orders" ToRole="Users" />
+          <Property Name="zje" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="seid" />
+          </Key>
+          <Property Name="seid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isused" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="cid" Type="Int32" />
+          <Property Name="cno" Type="Int32" />
+          <NavigationProperty Name="Car" Relationship="Self.FK__seat__cid__31EC6D26" FromRole="Seat" ToRole="Car" />
+          <NavigationProperty Name="Orderdetail" Relationship="Self.FK__orderdetai__srid__3A81B327" FromRole="Seat" ToRole="Orderdetail" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="snname" />
+          </Key>
+          <Property Name="snname" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="snlevel" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Orderdetail" Relationship="Self.FK_orderdetail_takeend_1" FromRole="Station" ToRole="Orderdetail" />
+          <NavigationProperty Name="Orderdetail1" Relationship="Self.FK_orderdetail_takestart_1" FromRole="Station" ToRole="Orderdetail" />
+          <NavigationProperty Name="Yunzhuan" Relationship="Self.FK__yunzhuan__snname__693CA210" FromRole="Station" ToRole="Yunzhuan" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="tname" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tcaptain" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="tstart" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="tend" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Act" Relationship="Self.FK__act__tname__29572725" FromRole="Train" ToRole="Act" />
+          <NavigationProperty Name="Car" Relationship="Self.FK__car__tname__2E1BDC42" FromRole="Train" ToRole="Car" />
+          <NavigationProperty Name="Yunzhuan" Relationship="Self.FK__yunzhuan__tname__68487DD7" FromRole="Train" ToRole="Yunzhuan" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uname" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="uemail" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="upassword" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="uphoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_orders_orders_1" FromRole="Users" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Yunzhuan">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="snname" />
+          </Key>
+          <Property Name="tname" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="snname" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="yzarrive" Type="Time" Precision="7" />
+          <Property Name="yzleave" Type="Time" Precision="7" />
+          <NavigationProperty Name="Station" Relationship="Self.FK__yunzhuan__snname__693CA210" FromRole="Yunzhuan" ToRole="Station" />
+          <NavigationProperty Name="Train" Relationship="Self.FK__yunzhuan__tname__68487DD7" FromRole="Yunzhuan" ToRole="Train" />
+        </EntityType>
+        <EntityType Name="Chepiao">
+          <Key>
+            <PropertyRef Name="uid" />
+            <PropertyRef Name="oid" />
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="odid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" />
+          <Property Name="uname" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="oid" Type="Int32" Nullable="false" />
+          <Property Name="zffs" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="takedate" Type="DateTime" Precision="3" />
+          <Property Name="takername" Type="String" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="tname" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ctypea" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="ctypeb" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="cnum" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="cno" Type="Int32" />
+          <Property Name="takestart" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="takeend" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="odid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Liechegaikuang">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="lname" />
+          </Key>
+          <Property Name="tname" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tstart" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="tend" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="yzleave" Type="Time" Precision="7" />
+          <Property Name="yzarrive" Type="Time" Precision="7" />
+          <Property Name="lname" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ljv" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="lduan" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="ldriver" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="tcaptain" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Liecheshikebiao">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="snname" />
+          </Key>
+          <Property Name="tname" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="yzarrive" Type="Time" Precision="7" />
+          <Property Name="yzleave" Type="Time" Precision="7" />
+          <Property Name="snname" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="snlevel" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__act__lname__286302EC">
+          <End Role="Locomotive" Type="Self.Locomotive" Multiplicity="1" />
+          <End Role="Act" Type="Self.Act" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locomotive">
+              <PropertyRef Name="lname" />
+            </Principal>
+            <Dependent Role="Act">
+              <PropertyRef Name="lname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__act__tname__29572725">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Act" Type="Self.Act" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="tname" />
+            </Principal>
+            <Dependent Role="Act">
+              <PropertyRef Name="tname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__car__tname__2E1BDC42">
+          <End Role="Train" Type="Self.Train" Multiplicity="0..1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="tname" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="tname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seat__cid__31EC6D26">
+          <End Role="Car" Type="Self.Car" Multiplicity="0..1" />
+          <End Role="Seat" Type="Self.Seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="Seat">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderdetai__srid__3A81B327">
+          <End Role="Seat" Type="Self.Seat" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="seid" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="seid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderdetail__oid__398D8EEE">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderdetail_takeend_1">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="snname" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="takeend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderdetail_takestart_1">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="Orderdetail" Type="Self.Orderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="snname" />
+            </Principal>
+            <Dependent Role="Orderdetail">
+              <PropertyRef Name="takestart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_orders_1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__yunzhuan__snname__693CA210">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Yunzhuan" Type="Self.Yunzhuan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="snname" />
+            </Principal>
+            <Dependent Role="Yunzhuan">
+              <PropertyRef Name="snname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__yunzhuan__tname__68487DD7">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Yunzhuan" Type="Self.Yunzhuan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="tname" />
+            </Principal>
+            <Dependent Role="Yunzhuan">
+              <PropertyRef Name="tname" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Locomotive_systemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Act" EntityType="Self.Act" />
+          <EntitySet Name="Car" EntityType="Self.Car" />
+          <EntitySet Name="Locomotive" EntityType="Self.Locomotive" />
+          <EntitySet Name="Orderdetail" EntityType="Self.Orderdetail" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Seat" EntityType="Self.Seat" />
+          <EntitySet Name="Station" EntityType="Self.Station" />
+          <EntitySet Name="Train" EntityType="Self.Train" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Yunzhuan" EntityType="Self.Yunzhuan" />
+          <EntitySet Name="Chepiao" EntityType="Self.Chepiao" />
+          <EntitySet Name="Liechegaikuang" EntityType="Self.Liechegaikuang" />
+          <EntitySet Name="Liecheshikebiao" EntityType="Self.Liecheshikebiao" />
+          <AssociationSet Name="FK__act__lname__286302EC" Association="Self.FK__act__lname__286302EC">
+            <End Role="Locomotive" EntitySet="Locomotive" />
+            <End Role="Act" EntitySet="Act" />
+          </AssociationSet>
+          <AssociationSet Name="FK__act__tname__29572725" Association="Self.FK__act__tname__29572725">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Act" EntitySet="Act" />
+          </AssociationSet>
+          <AssociationSet Name="FK__car__tname__2E1BDC42" Association="Self.FK__car__tname__2E1BDC42">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seat__cid__31EC6D26" Association="Self.FK__seat__cid__31EC6D26">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Seat" EntitySet="Seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderdetai__srid__3A81B327" Association="Self.FK__orderdetai__srid__3A81B327">
+            <End Role="Seat" EntitySet="Seat" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderdetail__oid__398D8EEE" Association="Self.FK__orderdetail__oid__398D8EEE">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderdetail_takeend_1" Association="Self.FK_orderdetail_takeend_1">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderdetail_takestart_1" Association="Self.FK_orderdetail_takestart_1">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Orderdetail" EntitySet="Orderdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_orders_1" Association="Self.FK_orders_orders_1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__yunzhuan__snname__693CA210" Association="Self.FK__yunzhuan__snname__693CA210">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Yunzhuan" EntitySet="Yunzhuan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__yunzhuan__tname__68487DD7" Association="Self.FK__yunzhuan__tname__68487DD7">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Yunzhuan" EntitySet="Yunzhuan" />
+          </AssociationSet>
+          <EntitySet Name="Availableseats" EntityType="locomotive_systemModel.Availableseats" />
+        </EntityContainer>
+        <EntityType Name="Availableseats">
+          <Key>
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="seid" />
+          </Key>
+          <Property Name="tname" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="cnum" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="cno" Type="Int32" />
+          <Property Name="seid" Type="Int32" Nullable="false" />
+          <Property Name="cytpea" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ctypeb" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="locomotive_systemModelStoreContainer" CdmEntityContainer="Locomotive_systemEntities">
+          <EntitySetMapping Name="Act">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Act">
+              <MappingFragment StoreEntitySet="Act">
+                <ScalarProperty Name="adate" ColumnName="adate" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="ldriver" ColumnName="ldriver" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Car">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Car">
+              <MappingFragment StoreEntitySet="Car">
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="cmanufacturer" ColumnName="cmanufacturer" />
+                <ScalarProperty Name="ctypea" ColumnName="ctypea" />
+                <ScalarProperty Name="ctypeb" ColumnName="ctypeb" />
+                <ScalarProperty Name="cjv" ColumnName="cjv" />
+                <ScalarProperty Name="cduan" ColumnName="cduan" />
+                <ScalarProperty Name="ccapacity" ColumnName="ccapacity" />
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="cnum" ColumnName="cnum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locomotive">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Locomotive">
+              <MappingFragment StoreEntitySet="Locomotive">
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="lmanufacturer" ColumnName="lmanufacturer" />
+                <ScalarProperty Name="lbirth" ColumnName="lbirth" />
+                <ScalarProperty Name="ljv" ColumnName="ljv" />
+                <ScalarProperty Name="lduan" ColumnName="lduan" />
+                <ScalarProperty Name="lphoto" ColumnName="lphoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orderdetail">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Orderdetail">
+              <MappingFragment StoreEntitySet="Orderdetail">
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="odid" ColumnName="odid" />
+                <ScalarProperty Name="seid" ColumnName="seid" />
+                <ScalarProperty Name="takedate" ColumnName="takedate" />
+                <ScalarProperty Name="takername" ColumnName="takername" />
+                <ScalarProperty Name="takestart" ColumnName="takestart" />
+                <ScalarProperty Name="takeend" ColumnName="takeend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="zje" ColumnName="zje" />
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="odate" ColumnName="odate" />
+                <ScalarProperty Name="zffs" ColumnName="zffs" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seat">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Seat">
+              <MappingFragment StoreEntitySet="Seat">
+                <ScalarProperty Name="seid" ColumnName="seid" />
+                <ScalarProperty Name="isused" ColumnName="isused" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="cno" ColumnName="cno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Station">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="snname" ColumnName="snname" />
+                <ScalarProperty Name="snlevel" ColumnName="snlevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Train">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Train">
+              <MappingFragment StoreEntitySet="Train">
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="tcaptain" ColumnName="tcaptain" />
+                <ScalarProperty Name="tstart" ColumnName="tstart" />
+                <ScalarProperty Name="tend" ColumnName="tend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="uname" ColumnName="uname" />
+                <ScalarProperty Name="uemail" ColumnName="uemail" />
+                <ScalarProperty Name="upassword" ColumnName="upassword" />
+                <ScalarProperty Name="uphoto" ColumnName="uphoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yunzhuan">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Yunzhuan">
+              <MappingFragment StoreEntitySet="Yunzhuan">
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="snname" ColumnName="snname" />
+                <ScalarProperty Name="yzarrive" ColumnName="yzarrive" />
+                <ScalarProperty Name="yzleave" ColumnName="yzleave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chepiao">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Chepiao">
+              <MappingFragment StoreEntitySet="Chepiao">
+                <ScalarProperty Name="odid" ColumnName="odid" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="uname" ColumnName="uname" />
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="zffs" ColumnName="zffs" />
+                <ScalarProperty Name="takedate" ColumnName="takedate" />
+                <ScalarProperty Name="takername" ColumnName="takername" />
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="ctypea" ColumnName="ctypea" />
+                <ScalarProperty Name="ctypeb" ColumnName="ctypeb" />
+                <ScalarProperty Name="cnum" ColumnName="cnum" />
+                <ScalarProperty Name="cno" ColumnName="cno" />
+                <ScalarProperty Name="takestart" ColumnName="takestart" />
+                <ScalarProperty Name="takeend" ColumnName="takeend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Liechegaikuang">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Liechegaikuang">
+              <MappingFragment StoreEntitySet="Liechegaikuang">
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="tstart" ColumnName="tstart" />
+                <ScalarProperty Name="tend" ColumnName="tend" />
+                <ScalarProperty Name="yzleave" ColumnName="yzleave" />
+                <ScalarProperty Name="yzarrive" ColumnName="yzarrive" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="ljv" ColumnName="ljv" />
+                <ScalarProperty Name="lduan" ColumnName="lduan" />
+                <ScalarProperty Name="ldriver" ColumnName="ldriver" />
+                <ScalarProperty Name="tcaptain" ColumnName="tcaptain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Liecheshikebiao">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Liecheshikebiao">
+              <MappingFragment StoreEntitySet="Liecheshikebiao">
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="yzarrive" ColumnName="yzarrive" />
+                <ScalarProperty Name="yzleave" ColumnName="yzleave" />
+                <ScalarProperty Name="snname" ColumnName="snname" />
+                <ScalarProperty Name="snlevel" ColumnName="snlevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Availableseats">
+            <EntityTypeMapping TypeName="locomotive_systemModel.Availableseats">
+              <MappingFragment StoreEntitySet="Availableseats">
+                <ScalarProperty Name="ctypeb" ColumnName="ctypeb" />
+                <ScalarProperty Name="cytpea" ColumnName="cytpea" />
+                <ScalarProperty Name="seid" ColumnName="seid" />
+                <ScalarProperty Name="cno" ColumnName="cno" />
+                <ScalarProperty Name="cnum" ColumnName="cnum" />
+                <ScalarProperty Name="tname" ColumnName="tname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

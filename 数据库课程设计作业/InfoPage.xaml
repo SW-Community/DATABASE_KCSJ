@@ -1,0 +1,72 @@
+﻿<Page x:Name="InfoPGE" x:Class="数据库课程设计作业.InfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="InfoPage">
+
+    <Grid Background="#ffffff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock HorizontalAlignment="Center" Text="一遍一遍来过，一次一次放过..."/>
+            <TextBlock HorizontalAlignment="Center" Text="    你说别追呀，又依依不舍"/>
+            <TextBlock HorizontalAlignment="Center" Text="        所以生命啊，她璀璨如歌..."/>
+            <TextBlock HorizontalAlignment="Center" Text="                 ————致敬，中国铁路！"/>
+        </StackPanel>
+        <Border Grid.Row="1" Margin="5,5,5,5" BorderBrush="#90c3f8" BorderThickness="5">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="WrapPanel">
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="在这里修改您的个人信息"/>
+                <TextBlock Text="千门万户曈曈日，总把新桃换旧符。"/>
+                <TextBlock Text="请将密码等个人信息保持最新状态，为你的乘车之旅保驾护航。"/>
+
+                <WrapPanel>
+                    <Label Content="用户ID（一旦注册不可修改）"/>
+                    <TextBox x:Name="txbInfoUid" Width="200" IsReadOnly="True"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <!--昵称-->
+                    <Label Content="昵称："/>
+                    <TextBox x:Name="txbInfoName" Width="250"></TextBox>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="邮箱："/>
+                    <TextBox x:Name="txbInfoEmail" Width="250"/>
+                </WrapPanel>
+                <WrapPanel >
+                    <!--密码-->
+                    <Label Content="密码："/>
+                    <TextBox x:Name="txbInfoPwd" Width="250"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <!--确认密码-->
+                    <Label Content="确认密码："/>
+                    <TextBox x:Name="txbInfoConfirm" Width="250"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <!--照片（这地方，，，难道要我调用摄像头？不会，还是从本地浏览吧）-->
+                    <WrapPanel>
+                        <Border Margin="5" Padding="5" BorderBrush="Blue" BorderThickness="1">
+                            <Image x:Name="imgInfoPhoto" Height="79" Width="58"/>
+                        </Border>
+                        <StackPanel Margin="5,5,5,5">
+                            <Button x:Name="btnInfoAddPhoto" FontSize="16" Content="添加照片" Click="btnInfoAddPhoto_Click"/>
+                            <Button x:Name="btnInfoRemovePhoto" FontSize="16" Content="删除照片" Click="btnInfoRemovePhoto_Click"/>
+                        </StackPanel>
+                    </WrapPanel>
+                </WrapPanel>
+                <Button x:Name="btnInfoSubmit" Content="提交修改" Click="btnInfoSubmit_Click" Loaded="btnInfoSubmit_Loaded"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

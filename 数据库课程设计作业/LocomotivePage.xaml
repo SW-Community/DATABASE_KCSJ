@@ -1,0 +1,127 @@
+﻿<Page x:Class="数据库课程设计作业.LocomotivePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:数据库课程设计作业"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LocomotivePage">
+
+    <Grid Background="#ffffff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <DockPanel VerticalAlignment="Center" Grid.Row="0" LastChildFill="False">
+            <Label DockPanel.Dock="Left" Content="过滤条件"/>
+            <ComboBox Name="cbCondition" SelectionChanged="cbCondition_SelectionChanged" IsEnabled="False">
+                <ComboBoxItem Content="-- 查询全部 --" IsSelected="True"/>
+                <ComboBoxItem Content="按车型系列划分"/>
+                <ComboBoxItem Content="按制造厂划分"/>
+                <ComboBoxItem Content="我知道机车车号"/>
+            </ComboBox>
+            <DockPanel DockPanel.Dock="Left" x:Name="dpSeries" Visibility="Collapsed">
+                <Label DockPanel.Dock="Left" Content="选择车型"/>
+                <ComboBox Name="cbSeries">
+                    <ComboBoxItem Content="东风" Tag="DF" IsSelected="True"/>
+                    <ComboBoxItem Content="韶山" Tag="SS"/>
+                    <ComboBoxItem Content="和谐电" Tag="HXD"/>
+                    <ComboBoxItem Content="和谐内" Tag="HXN"/>
+                    <ComboBoxItem Content="复兴电" Tag="FXD"/>
+                    <ComboBoxItem Content="复兴内" Tag="FXD"/>
+                    <ComboBoxItem Content="ND" Tag="ND"/>
+                    <ComboBoxItem Content="NY" Tag="NY"/>
+                    <ComboBoxItem Content="NJ" Tag="NJ"/>
+                    <ComboBoxItem Content="工矿" Tag="GK"/>
+                    <ComboBoxItem Content="北京" Tag="BJ"/>
+                    <ComboBoxItem Content="东方红" Tag="DFH"/>
+                    <ComboBoxItem Content="其他"/>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Left" x:Name="dpManu" Visibility="Collapsed">
+                <Label DockPanel.Dock="Left" Content="选择制造厂"/>
+                <ComboBox Name="cbManu">
+                    <ComboBoxItem Content="株洲" IsSelected="True"/>
+                    <ComboBoxItem Content="戚墅堰"/>
+                    <ComboBoxItem Content="四方"/>
+                    <ComboBoxItem Content="大连"/>
+                    <ComboBoxItem Content="大同"/>
+                    <ComboBoxItem Content="资阳"/>
+                    <ComboBoxItem Content="北京二七"/>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Left" x:Name="dpNum" Visibility="Collapsed">
+                <Label DockPanel.Dock="Left" Content="输入车号"/>
+                <TextBox x:Name ="txbCheHao" Width="100"/>
+            </DockPanel>
+            <Button x:Name="btnQueryLoco" DockPanel.Dock="Right" Content="立即查询" Click="btnQueryLoco_Click"/>
+        </DockPanel>
+        <DataGrid x:Name="dgLoco" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Resources>
+                <DataTemplate x:Key="BirthDateTemplate">
+                    <TextBlock Text="{Binding lbirth, StringFormat=yyyy-MM-dd}"/>
+                    <!--绑定的属性名称填进去-->
+                </DataTemplate>
+                <DataTemplate x:Key="PhotoTemplate">
+                    <Image Source="{Binding lphoto}" Width="20"/>
+                </DataTemplate>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="机车车号" Binding="{Binding lname}"/>
+                <DataGridTextColumn Header="制造厂" Binding="{Binding lmanufacturer}"/>
+                <DataGridTextColumn Header="局" Binding="{Binding ljv}"/>
+                <DataGridTextColumn Header="段" Binding="{Binding lduan}"/>
+                <DataGridTemplateColumn Header="入段日期" CellTemplate="{StaticResource BirthDateTemplate}"/>
+                <DataGridTemplateColumn Header="照片" CellTemplate="{StaticResource PhotoTemplate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <WrapPanel DockPanel.Dock="Top" Margin="5,5,5,5">
+                        <Label Content="车号（请使用大写英文字母+数字格式）："/>
+                        <TextBox x:Name="txbLame" Width="100"/>
+                        <Label Content="制造厂："/>
+                        <ComboBox Name="cbLmanufacturer">
+                            <ComboBoxItem Content="株洲" IsSelected="True"/>
+                            <ComboBoxItem Content="戚墅堰"/>
+                            <ComboBoxItem Content="四方"/>
+                            <ComboBoxItem Content="大连"/>
+                            <ComboBoxItem Content="大同"/>
+                            <ComboBoxItem Content="资阳"/>
+                            <ComboBoxItem Content="北京二七"/>
+                        </ComboBox>
+                    </WrapPanel>
+                    <WrapPanel DockPanel.Dock="Top" Margin="5,5,5,5">
+                        <TextBox x:Name="txbLjv" Width="100"/>
+                        <Label Content="局"/>
+                        <TextBox x:Name="txbLduan" Width="100"/>
+                        <Label Content="段"/>
+                        <Label Content="    入段日期："/>
+                        <DatePicker Name="dpLbirth" SelectedDate="1970-1-1"/>
+                    </WrapPanel>
+                </DockPanel>
+                <DockPanel Grid.Column="1" LastChildFill="False" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Stretch">
+                    <Label DockPanel.Dock="Top" Content="机车照片"/>
+                    <Image  DockPanel.Dock="Top" Height="100" x:Name="imgLphoto"/>
+                    <Button DockPanel.Dock="Top" x:Name="btnAddPhoto" Content="添加照片" Click="btnAddPhoto_Click"/>
+                    <Button DockPanel.Dock="Top" x:Name="btnRemPhoto" Content="删除照片" Click="btnRemPhoto_Click"/>
+                </DockPanel>
+            </Grid>
+            <DockPanel Grid.Row="2" LastChildFill="False" >
+                <Button DockPanel.Dock="Left" x:Name="btnAddLoco" Width="300" Content="添加机车" Click="btnAddLoco_Click"/>
+                <Button DockPanel.Dock="Right" x:Name="btnRemoveLoco" Width="300" Content="删除选中" Click="btnRemoveLoco_Click"/>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Page>
