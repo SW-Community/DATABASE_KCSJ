@@ -186,7 +186,7 @@ namespace 数据库课程设计作业.service
             sb.AppendLine("限乘当日当次车\n");
             sb.AppendLine(takename + "\n");
             sb.AppendLine("               | 买票请到12306，发货请到95306 |");
-            sb.AppendLine("               |     中国铁路祝您旅途愉快     |");
+            sb.AppendLine("               |     中国铁路祝您旅途愉快     |");     //被抢愉快bushu
             sb.AppendLine("\n*********************************************************");
 
             try
